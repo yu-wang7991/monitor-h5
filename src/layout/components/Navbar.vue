@@ -2,7 +2,6 @@
   <van-nav-bar
     :title="transferTitle || pageTitle"
     left-arrow
-    :fixed="true"
     @click-left="onClickLeft"
   >
     <template #left>

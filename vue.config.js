@@ -26,12 +26,12 @@ module.exports = {
   lintOnSave: DEV,
   productionSourceMap: PROD && VUE_APP_SENTRY_ENABLED === 'yes' && VUE_APP_SENTRY_PLUGIN_ENABLED === 'yes',
   devServer: {
-    port: Number(DEVSERVERPORT),
-    open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    }
+    // port: Number(DEVSERVERPORT),
+    // open: true,
+    // overlay: {
+    //   warnings: false,
+    //   errors: true
+    // },
     // proxy: {
     //   '/v1': {
     //     target: 'http://devbuyerapi.ywindex.com',
@@ -41,12 +41,34 @@ module.exports = {
     //     }
     //   }
     // }
+    host: '0.0.0.0',
+    port: Number(DEVSERVERPORT),
+    open: true,
+    proxy: {
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        // 请到 .env.local 配置 NODE_DEVSERVER_PROXY 避免vue.config.js 频繁提交
+        target: process.env.NODE_DEVSERVER_PROXY || 'http://localhost:9090',
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    },
+    disableHostCheck: true
   },
   pwa: {
     name: VUE_APP_TITLE,
     workboxPluginMode: 'InjectManifest',
     workboxOptions: {
       swSrc: resolve('src/pwa/service-worker.js')
+    },
+    iconPaths: {
+      favicon32: 'favicon.ico',
+      favicon316: 'favicon.ico',
+      appleTouchIcon: 'favicon.ico',
+      maskIcon: 'favicon.ico',
+      msTileImage: 'favicon.ico'
     }
   },
   configureWebpack: {

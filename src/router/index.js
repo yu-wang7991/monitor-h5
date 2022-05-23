@@ -8,16 +8,6 @@ Vue.use(VueRouter)
 
 export const routes = [
   {
-    path: '/redirect',
-    component: Layout,
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/pages/redirect/index')
-      }
-    ]
-  },
-  {
     path: '',
     component: Layout,
     redirect: '/home',
@@ -26,7 +16,7 @@ export const routes = [
         path: 'home',
         component: () => import('@/pages/home/index'),
         name: 'Home',
-        meta: { title: '首页' }
+        meta: { title: '监控列表' }
       }
     ]
   },
@@ -35,16 +25,10 @@ export const routes = [
     component: Layout,
     children: [
       {
-        path: 'create',
-        component: () => import('@/pages/test/index'),
-        name: 'CreateTest',
-        meta: { title: '添加地址' }
-      },
-      {
-        path: 'edit/:id',
-        component: () => import('@/pages/test/index'),
-        name: 'EditTest',
-        meta: { title: '修改地址', keepAlive: true }
+        path: 'test',
+        component: () => import('../pages/test/index.vue'),
+        name: 'Test',
+        meta: { title: '详情' }
       }
     ]
   },

@@ -25,6 +25,9 @@ router.beforeEach(async(to, from, next) => {
   //   next(`/login?redirect=${to.path}`)
   NProgress.done()
   // }
+  if (to.meta.title) { // 如果设置标题，拦截后设置标题
+    document.title = to.meta.title
+  }
 })
 
 router.afterEach((to) => {

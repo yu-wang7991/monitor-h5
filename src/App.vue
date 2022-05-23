@@ -4,7 +4,6 @@
     <ServiceWorkerUpdatePopup />
   </div>
 </template>
-
 <script>
 import ServiceWorkerUpdatePopup from '@/pwa/components/ServiceWorkerUpdatePopup.vue'
 export default {

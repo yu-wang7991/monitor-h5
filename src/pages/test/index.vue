@@ -1,95 +1,62 @@
 <template>
-  <van-address-edit
-    :area-list="areaList"
-    show-postal
-    show-delete
-    show-set-default
-    show-search-result
-    :address-info="addressInfo"
-    :search-result="searchResult"
-    :area-columns-placeholder="['请选择', '请选择', '请选择']"
-    @save="handleCreateTest"
-    @delete="handleDeleteTest"
-    @change-detail="onChangeDetail"
-  />
+  <div id="app">
+    <div class="test-videojs">
+      <video id="videoPlayer" class="video-js vjs-big-play-centered" :controls="false" muted style="width:100%;" />
+    </div>
+  </div>
 </template>
-
 <script>
-import { testInteractor } from '@/core'
-import areaList from './area'
+import Videojs from 'video.js'
+import 'videojs-contrib-hls'
 export default {
   name: 'Test',
-  props: {},
+  props: {
+    url: String
+  },
   data() {
     return {
-      areaList,
-      searchResult: [],
-      addressInfo: {
-        name: '',
-        tel: '',
-        country: '',
-        province: '',
-        city: '',
-        county: '',
-        areaCode: '',
-        postalCode: '',
-        addressDetail: '',
-        isDefault: false
-      }
+      nowPlayVideoUrl: '',
+      myPlyer: null
     }
   },
-  computed: {
-    id() {
-      return parseInt(this.$route.params.id)
-    }
+  mounted() {
+    this.nowPlayVideoUrl = this.$route.query.url
+    this.initVideo(this.nowPlayVideoUrl)
   },
-  async created() {
-    if (this.id) {
-      await this.handleGetTest()
-    }
+  beforeDestroy() {
+    this.myPlyer.dispose()
   },
   methods: {
-    async handleCreateTest(content) {
-      try {
-        if (this.id) {
-          await testInteractor.updateTest(content)
-        } else {
-          await testInteractor.createTest(content)
-        }
-        this.$bus.emit('test-change')
-        this.$router.go(-1)
-      } catch (error) {
-        console.log(error)
+    initVideo(nowPlayVideoUrl) {
+      const options = {
+        autoplay: true, // 设置自动播放
+        controls: true, // 显示播放的控件
+        sources: [
+          {
+            src: nowPlayVideoUrl,
+            type: 'application/x-mpegURL' // 告诉videojs,这是一个hls流
+          }
+        ]
       }
-    },
-    async handleGetTest() {
-      try {
-        const test = await testInteractor.getTest(this.id)
-        this.addressInfo = Object.assign({}, test)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    async handleDeleteTest() {
-      try {
-        await testInteractor.deleteTest(this.id)
-        this.$bus.emit('test-change')
-        this.$router.go(-1)
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    onChangeDetail(val) {
-      if (val) {
-        this.searchResult = [{
-          name: '黄龙万科中心',
-          address: '杭州市西湖区'
-        }]
-      } else {
-        this.searchResult = []
-      }
+      this.myPlyer = Videojs('videoPlayer', options, function onPlayerReady() {
+        this.on('loadstart', function() {
+          console.log('开始请求数据 ')
+          this.play()
+        })
+        this.on('canplaythrough', function() {
+          console.log('视频源数据加载完成')
+        })
+      })
     }
   }
-
 }
 </script>
+
+<style lang="scss">
+#videoPlayer {
+ width: 500px;
+ height: 300px;
+ margin: 50px auto;
+}
+</style>
+

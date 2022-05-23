@@ -53,14 +53,14 @@ const instance = axios.create(DEFAULT_OPTIONS)
 
 instance.interceptors.request.use(
   (config) => {
-    Toast.loading({
-      duration: 0,
-      message: '加载中...',
-      forbidClick: true
-    })
-    if (store.getters.token) {
-      config.headers['Authorization'] = getToken()
-    }
+    // Toast.loading({
+    //   duration: 0,
+    //   message: '加载中...',
+    //   forbidClick: true
+    // })
+    // if (store.getters.token) {
+    //   config.headers['Authorization'] = getToken()
+    // }
     return config
   },
   (error) => {
@@ -68,12 +68,11 @@ instance.interceptors.request.use(
     Promise.reject(error)
   }
 )
-
 instance.interceptors.response.use(
   (response) => {
     Toast.clear()
     responseLog(response)
-    const code = response.data.code
+    const code = response.data.code || response.code
     const msg = RESTFUL_ERROR_CODE_MAP[code]
     if (msg) {
       Toast(response.data.message || msg)
