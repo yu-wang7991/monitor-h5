@@ -1,8 +1,6 @@
 <template>
-  <div id="app">
-    <div class="test-videojs">
-      <video id="videoPlayer" class="video-js vjs-big-play-centered" :controls="false" muted style="width:100%;" />
-    </div>
+  <div class="test-videojs">
+    <video id="videoPlayer" class="video-js vjs-big-play-centered" :controls="false" muted style="width: 100%" />
   </div>
 </template>
 <script>
@@ -54,9 +52,9 @@ export default {
 
 <style lang="scss">
 #videoPlayer {
- width: 500px;
- height: 300px;
- margin: 50px auto;
+  width: 500px;
+  height: 300px;
+  margin: 50px auto;
 }
 </style>
 

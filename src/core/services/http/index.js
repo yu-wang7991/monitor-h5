@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import { Toast, Dialog } from 'vant'
-import { getToken } from '../cache'
+// import { getToken } from '../cache'
 import RESTFUL_ERROR_CODE_MAP from '@/constants/restful_error_code'
 
 function errorReport(url, error, requestOptions, response) {

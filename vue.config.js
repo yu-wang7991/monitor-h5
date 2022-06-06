@@ -48,7 +48,7 @@ module.exports = {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
         // 请到 .env.local 配置 NODE_DEVSERVER_PROXY 避免vue.config.js 频繁提交
-        target: process.env.NODE_DEVSERVER_PROXY || 'http://localhost:9090',
+        target: process.env.NODE_DEVSERVER_PROXY || 'http://localhost:9000',
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
