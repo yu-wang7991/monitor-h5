@@ -193,6 +193,7 @@ module.exports = {
       objectsInObjects: false
     }],
     'array-bracket-spacing': [2, 'never'],
-    'no-useless-catch': 0
+    'no-useless-catch': 0,
+    'vue/no-template-shadow':'off',
   }
 }

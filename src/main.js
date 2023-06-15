@@ -16,7 +16,6 @@ import preventReClick from '@/directive/prevent-re-click'
 import i18n from '@/lang'
 import 'video.js/dist/video-js.css'
 Vue.config.productionTip = false
-
 const { NODE_ENV, VUE_APP_SENTRY_ENABLED } = process.env
 const PROD = NODE_ENV === 'production'
 
